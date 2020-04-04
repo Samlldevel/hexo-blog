@@ -38,7 +38,6 @@ $ hexo deploy
 More info: [Deployment](https://hexo.io/docs/one-command-deployment.html)
 
 --------
-<img src="http://i0.hdslb.com/bfs/article/ce88c5a380a66a1881e637d50f138b9a5badd6a0.jpg" alt="这是一张网路图片">
 
 
 ![这是网络图片](http://i0.hdslb.com/bfs/article/ce88c5a380a66a1881e637d50f138b9a5badd6a0.jpg)

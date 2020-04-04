@@ -4,51 +4,46 @@ const webpack = require('webpack');
 
 module.exports = {
 
-  mode: 'production',
+    mode: 'production',
 
-  bail: true,
+    bail: true,
 
-  devtool: 'source-map',
+    devtool: 'source-map',
 
-  entry: {
-    'typography': './raw/js/index.js',
-    'valine': './raw/js/valine.js'
-  },
+    entry: {
+        'typography': './raw/js/index.js'
+    },
 
-  output: {
-    path: path.resolve(__dirname, 'source', 'js'),
-    filename: '[name].min.js',
-    publicPath: '/'
-  },
+    output: {
+        path: path.resolve(__dirname, 'source', 'js'),
+        filename: '[name].min.js',
+        publicPath: '/'
+    },
 
-  resolve: {
-    modules: ['node_modules'],
-    extensions: ['.js']
-  },
+    resolve: {
+        modules: ['node_modules'],
+        extensions: ['.js']
+    },
 
-  module: {
-    strictExportPresence: true,
-    rules: [
-      {
-        test: /\.js$/,
-        use: [
-          {
-            loader: require.resolve('babel-loader'),
-            options: {
-              compact: true,
-              presets: ['@babel/preset-env']
-            }
-          }
-        ]
-      }
-    ]
-  },
+    module: {
+        strictExportPresence: true,
+        rules: [{
+            test: /\.js$/,
+            use: [{
+                loader: require.resolve('babel-loader'),
+                options: {
+                    compact: true,
+                    presets: ['@babel/preset-env']
+                }
+            }]
+        }]
+    },
 
-  node: {
-    dgram: 'empty',
-    fs: 'empty',
-    net: 'empty',
-    tls: 'empty',
-  }
+    node: {
+        dgram: 'empty',
+        fs: 'empty',
+        net: 'empty',
+        tls: 'empty',
+    }
 
 };
