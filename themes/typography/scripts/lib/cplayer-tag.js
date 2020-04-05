@@ -4,61 +4,60 @@ const scriptID = 'cplayer-script';
 const yaml = require('js-yaml');
 require('isomorphic-fetch');
 
-module.exports = function (args, contents) {
+module.exports = function(args, contents) {
+        let autoplay = false;
 
-  let autoplay = false;
+        let targetID = 'cplayer-' + utils.randomString(8, '1234567890');
 
-  let targetID = 'cplayer-' + utils.randomString(8, '1234567890');
+        let parser = 'yaml'
 
-  let parser = 'yaml'
+        args.forEach((arg) => {
+            switch (arg.trim()) {
+                case "autoplay":
+                    autoplay = true;
+                    break;
+                case "yaml":
+                    parser = 'yaml';
+                    break;
+                case "cson":
+                    parser = 'cson';
+                    break;
+                case "json":
+                    parser = 'json';
+                    break;
+                default:
+                    break;
+            }
+        })
 
-  args.forEach((arg) => {
-    switch (arg.trim()) {
-      case "autoplay":
-        autoplay = true;
-        break;
-      case "yaml":
-        parser = 'yaml';
-        break;
-      case "cson":
-        parser = 'cson';
-        break;
-      case "json":
-        parser = 'json';
-        break;
-      default:
-        break;
-    }
-  })
+        function parse(content, parser) {
+            switch (parser) {
+                case 'json':
+                    return JSON.parse(content);
+                case 'cson':
+                    return cson.parse(content);
+                case 'yaml':
+                    return yaml.load(content)
+            }
+        }
 
-  function parse(content, parser) {
-    switch (parser) {
-      case 'json':
-        return JSON.parse(content);
-      case 'cson':
-        return cson.parse(content);
-      case 'yaml':
-        return yaml.load(content)
-    }
-  }
+        let playlist = parse(contents, parser);
 
-  let playlist = parse(contents, parser);
+        let resPlaylist = [{ name: 'loading...', artist: 'loading...' }];
+        let add163 = [];
 
-  let resPlaylist = [{ name: 'loading...', artist: 'loading...' }];
-  let add163 = [];
+        playlist = playlist.forEach(function(v) {
+            switch (typeof v) {
+                case 'number':
+                    add163.push(v);
+                    break;
+                default:
+                    resPlaylist.push(v);
+                    break;
+            }
+        });
 
-  playlist = playlist.forEach(function (v) {
-    switch (typeof v) {
-      case 'number':
-        add163.push(v);
-        break;
-      default:
-        resPlaylist.push(v);
-        break;
-    }
-  });
-
-  return `
+        return `
     <div class="cplayer-template"
       id=${JSON.stringify(targetID)}
       data-id=${JSON.stringify(targetID)}

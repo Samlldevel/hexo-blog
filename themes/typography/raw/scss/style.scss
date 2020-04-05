@@ -419,10 +419,6 @@ li {
     margin: 5px 0;
 }
 
-figure {
-    overflow: scroll;
-}
-
 figure>table {
     width: 100%;
 }
@@ -565,6 +561,9 @@ figure {
     }
     li.soc {
         margin-top: 5px !important;
+    }
+    #live2d-widget {
+        right: -60px !important;
     }
 }
 

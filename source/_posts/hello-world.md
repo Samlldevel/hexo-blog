@@ -40,5 +40,5 @@ More info: [Deployment](https://hexo.io/docs/one-command-deployment.html)
 --------
 
 
-![这是网络图片](http://i0.hdslb.com/bfs/article/ce88c5a380a66a1881e637d50f138b9a5badd6a0.jpg)
+![这是网络图片](../images/2.jpg)
 
