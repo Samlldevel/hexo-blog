@@ -1,0 +1,35 @@
+{
+  "type": "Live2D Model Setting",
+  "name": "Senko_Model",
+  "model": "Senko_Model.moc",
+  "textures": ["Senko_Model.2048/texture_00.png"],
+  "motions": {
+    "idle": [
+      {
+        "file": "idle.mtn"
+      }
+    ],
+    "sleepy": [
+      {
+        "file": "sleeping.mtn"
+      }
+    ],
+    "okaeri": [
+      {
+        "file": "okaeri.mtn"
+      }
+    ],
+    "anim_1": [
+      {
+        "file": "anim_1.mtn",
+        "sound": "./touchBody.mp3",
+        "text": ["不要碰我"]
+      }
+    ],
+    "singing": [
+      {
+        "file": "singing.mtn"
+      }
+    ]
+  }
+}
