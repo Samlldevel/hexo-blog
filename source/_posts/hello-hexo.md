@@ -86,7 +86,7 @@ npm install hexo-helper-live2d
 
 安装完毕后，根据文档配置一下就🆗啦！
 右下角的板娘就出现了，如果你啥也不配，右下角会默认出现`shizuku`，自带点击交互声音
-![shizuku](../images/shizuku2.gif)
+![shizuku](../images/shizuku.gif)
 
 更多信息，参考: [hexo-helper-live2d](https://github.com/EYHN/hexo-helper-live2d/tree/405d94c61f06715f43e5370a8fc40fe13145108b)
 

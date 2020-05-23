@@ -9,9 +9,11 @@
     "server": "hexo server"
   },
   "hexo": {
-    "version": "4.2.0"
+    "version": "4.2.1"
   },
   "dependencies": {
+    "cplayer": "^3.2.2",
+    "cson": "^7.5.0",
     "hexo": "^4.0.0",
     "hexo-deployer-git": "^2.1.0",
     "hexo-generator-archive": "^1.0.0",
@@ -26,6 +28,9 @@
     "hexo-renderer-jade": "^0.5.0",
     "hexo-renderer-marked": "^2.0.0",
     "hexo-renderer-stylus": "^1.1.0",
-    "hexo-server": "^1.0.0"
+    "hexo-server": "^1.0.0",
+    "hexo-tag-cplayer": "^1.0.0",
+    "js-yaml": "^3.13.1",
+    "utility": "^1.16.3"
   }
 }
