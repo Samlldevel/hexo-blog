@@ -7,6 +7,8 @@ tags:
 categories: 浏览器
 ---
 
+![Chrome-DevTools](./chrome-devtools/Chrome-DevTools.jpg)
+
 ### 前言
 > 我们每天都在写 ~~bug~~ 代码，那么拥有一身流畅的调试本领是十分重要的，下面是我总结一些实用的调试技巧，使无论在开发环境、生产环境都能够第一时间定位问题
 
@@ -18,10 +20,10 @@ categories: 浏览器
 
 ### 正文 
 下面你将了解 
-- `$`
-- `$$`
-- `$0`~`$4`
-- `$_`
+- $
+- $$
+- $0~$4
+- $_
 - console.table
 - Store as global
 - copy()
@@ -30,7 +32,7 @@ categories: 浏览器
 - command 菜单
 - 常用快捷键
 
-### Console 面板 - "$"
+### Console面板-"$"
 Console 面板是我们最喜欢打开的面板之一，可以用来查看输出的信息以及查询 api
 
  `$` 在 JQuery 它是选择器，那么在 Console 面板中它是 `document.querySelector`的简写
@@ -53,7 +55,7 @@ Console 面板是我们最喜欢打开的面板之一，可以用来查看输出
 
 ![$与Vue](./chrome-devtools/$与Vue.png)
 
-### Console 面板 - 通用
+### Console面板-通用
 
 `console.table` 以表格形式展示数据，能够更清楚展示对象及数组
 
@@ -80,7 +82,7 @@ Snippets + Console 面板 = 自带 API 的 JavaScript 编辑器
 虽然 console.log 也能起到调试的作用，但是还是断点调试比较强大
 ![debugger](./chrome-devtools/debugger.png)
 
-### command 菜单
+### command菜单
 快捷键 shift + ctrl + p
 
 截图： Google Chrome 浏览器自带截图存为图片功能，不需要插件
