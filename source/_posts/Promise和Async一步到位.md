@@ -626,6 +626,23 @@ finally2
 > 通俗来说，`.all()`的作用是接收一组异步任务，然后并行执行异步任务，并且在所有异步操作执行完后才执行回调。
 > `.race()`的作用也是接收一组异步任务，然后并行执行异步任务，只保留取第一个执行完成的异步操作的结果，其他的方法仍在执行，不过执行结果会被抛弃。
 
-很明显 `all()` 是全都且统一得出结果, `race()` 是竞速,谁利索只要谁
+很明显 `all()` 是全都且统一得出结果, `race()` 是竞速
 
-。。。未完
+首先来看 `all`
+
+```js
+function runAsync(x) {
+  const p = new Promise((r) => setTimeout(() => r(x, console.log(x)), 1000))
+  return p
+}
+function runReject(x) {
+  const p = new Promise((res, rej) =>
+    setTimeout(() => rej(`Error: ${x}`, console.log(x)), 1000 * x)
+  )
+  return p
+}
+
+Promise.all([runAsync(1), runReject(4), runAsync(3), runReject(2)])
+  .then((res) => console.log(res))
+  .catch((err) => console.log(err))
+```
