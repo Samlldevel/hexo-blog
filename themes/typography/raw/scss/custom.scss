@@ -50,7 +50,9 @@ body {
   }
 }
 
-.autopagerize_page_element {
+code[class*='language-'],
+pre[class*='language-'] {
+  font-size: 14px !important;
 }
 
 a:not[data=''] {
