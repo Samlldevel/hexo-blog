@@ -100,9 +100,9 @@ console.log(4)
 - 遇到 `console.log(1)`，输出 `1`
 - 遇到 `resolve("success");` 将 promise 状态改为 resolve ，并将值保存下来
 - 遇到 `console.log(2)`，输出 `2`
-- `new Promise` 内部代码执行完毕，跳出来遇到 `promise.then`，将其加入微任务队列
+- `new Promise` 内部代码执行完毕，跳出来遇到 `promise.then()`，将其加入微任务队列
 - 遇到 `console.log(4)`，输出 `4`
-- 本轮宏任务全部执行完毕，检查微任务队列，发现 `promise.then` 这个微任务且状态为 `resolved`，执行它,输出 `3`。
+- 本轮宏任务全部执行完毕，检查微任务队列，发现 `promise.then()` 这个微任务且状态为 `resolved`，执行它,输出 `3`。
 
 输出:
 
@@ -153,10 +153,10 @@ console.log('2', promise2)
 - 从上至下，先遇到 `new Promise`，执行该构造函数中的代码
 - 遇到 `console.log("promise1");`，输出 `promise1`
 - 遇到 `resolve("resolve1");` 将 promise 状态改为 `resolve` ，并将值保存下来
-- `new Promise` 内部代码执行完毕，跳出来遇到 `promise.then`，将其加入微任务队列
+- `new Promise` 内部代码执行完毕，跳出来遇到 `promise.then()`，将其加入微任务队列
 - 遇到 `console.log("1", promise1);`，且 `promise1` 的状态已经被改变为 `resolve`， 输出 `1 Promise{<resolved>: 'resolve1'}`,
 - 遇到 `console.log("2", promise2);`，且 `promise2` 是新的 状态为 pendding 的 promise， 输出 `2 Promise{<pendding>}`,
-- 宏任务执行完毕，查找微任务队列，发现 `promise1.then` 这个微任务且状态为 `resolved`，执行它，输出 `resolve1`
+- 宏任务执行完毕，查找微任务队列，发现 `promise1.then()` 这个微任务且状态为 `resolved`，执行它，输出 `resolve1`
 
 总结：
 
@@ -192,9 +192,9 @@ console.log('start')
 - 从上至下，先遇到声明 `fn ()`，函数内部代码在函数调用处执行
 - 遇到调用 `fn()`，执行内部代码，输出 `1`
 - 遇到 `resolve("success");` 将 promise 状态改为 `resolve` ，并将值保存下来
-- 完成函数内部调用，跳出函数内部， 遇到 `promise.then`，将其加入微任务队列
+- 完成函数内部调用，跳出函数内部， 遇到 `promise.then()`，将其加入微任务队列
 - 遇到 `console.log(start);`，输出 `start`
-- 宏任务执行完毕，查找微任务队列，发现 fn 函数的 `then` 这个微任务且状态为 `resolved`，执行它，输出 `success`
+- 宏任务执行完毕，查找微任务队列，发现 fn 函数的 `then()` 这个微任务且状态为 `resolved`，执行它，输出 `success`
 
 输出:
 
@@ -251,7 +251,7 @@ console.log('end')
 - 遇到 `setTimeout()`是个宏任务，进入下一轮的宏任务队列（🚦 注意：是下一轮），即`宏 2`（第二轮宏任务）
 - 遇到 `Promise.resolve()` 直接执行，将 promise 状态改为 `resolve`， 将 `then()` 放入本轮微任务
 - 从上至下，遇到 `console.log(end);`，输出 `end`
-- 本轮宏任务执行完毕，查找微任务队列，发现 `then` 这个微任务且状态为 `resolved`，执行它，输出 `resolve`
+- 本轮宏任务执行完毕，查找微任务队列，发现 `then()` 这个微任务且状态为 `resolved`，执行它，输出 `resolve`
 - 下一轮宏任务（宏 2）开始，执行 `setTimeout`，输出 `time`
 
 输出:
@@ -281,7 +281,7 @@ promise.then((res) => {
 console.log(4)
 ```
 
-要点：`setTimeout` 为宏任务, `promise.then` 状态为 `padding` 不执行
+要点：`setTimeout` 为宏任务, `promise.then()` 状态为 `padding` 不执行
 
 过程分析：
 
@@ -296,9 +296,9 @@ console.log(4)
 
 - 下一轮宏任务（宏 2）开始，执行 `setTimeout`
 - 在宏 2 遇到 `console.log(timerStart)`，输出 `timerStart`
-- 在宏 2 遇到 `resolve('success')`，将 promise 的状态改为 `resolved` 且保存结果并将之前的 `promise.then` 推入微任务队列(待验证)
+- 在宏 2 遇到 `resolve('success')`，将 promise 的状态改为 `resolved` 且保存结果并将之前的 `promise.then()` 推入微任务队列(待验证)
 - 在宏 2 遇到 `console.log(timerEnd)`，输出 `timerEnd`
-- 在宏 2 也全部执行完毕，查找微任务队列，发现 `promise.then` 这个微任务，执行它，输出 `success`
+- 在宏 2 也全部执行完毕，查找微任务队列，发现 `promise.then()` 这个微任务，执行它，输出 `success`
   输出:
 
 ```cmd
@@ -494,7 +494,7 @@ Promise.reject(1)
   })
 ```
 
-- catch 不管被连接到哪里，都能捕获上层未捕捉过的错误
+- catch() 不管被连接到哪里，都能捕获上层未捕捉过的错误
 - return 3 会被包装成 `resolve(3)`
 - return new Error('error!!!') 会被包装成 `resolve(new Error('error!!!'))`
 
@@ -508,7 +508,7 @@ Promise.reject(1)
 
 如果不希望继续向下，可以
 
-```
+```bash
 return Promise.reject(new Error('error!!!'));
 // or
 throw new Error('error!!!')
@@ -523,7 +523,7 @@ const promise = Promise.resolve().then(() => {
 promise.catch(console.err)
 ```
 
-`.then` 或 `.catch` 不能返回 promise 本身，不然会造成死循环。
+`.then` 或 `.catch()` 不能返回 promise 本身，不然会造成死循环。
 
 结果：
 
@@ -568,8 +568,8 @@ Promise.reject('err!!!')
 'error' 'error!!!'
 ```
 
-如果 `then` 无第二个参数，那么错误将进入 `catch`
-如果错误由 `then`内部产生，那么错误将向下走进入 `catch`
+如果 `then` 无第二个参数，那么错误将进入 `catch()`
+如果错误由 `then`内部产生，那么错误将向下走进入 `catch()`
 
 #### 3.6
 
@@ -617,9 +617,7 @@ finally2
 'finally 会传下去'
 ```
 
-### Promise 中的 all 和 race
-
-#### 4.1
+### Promise 中的 all() 和 race()
 
 我们先看看 [呆哥](https://juejin.im/post/5e58c618e51d4526ed66b5cf) 的总结
 
@@ -628,7 +626,9 @@ finally2
 
 很明显 `all()` 是全都且统一得出结果, `race()` 是竞速
 
-首先来看 `all`
+首先来看 `all()`
+
+#### 4.1
 
 ```js
 function runAsync(x) {
@@ -642,7 +642,69 @@ function runReject(x) {
   return p
 }
 
+Promise.all([runAsync(1), runAsync(4), runAsync(3), runAsync(2)])
+  .then((res) => console.log(res))
+  .catch((err) => console.log(err))
+
 Promise.all([runAsync(1), runReject(4), runAsync(3), runReject(2)])
   .then((res) => console.log(res))
   .catch((err) => console.log(err))
 ```
+
+按道理，第一个 `Promise.all()` 会输出一个数组 `[...]`，里面包含了所有的结果
+
+```js
+;[1, 2, 3, 4]
+```
+
+接着第二个`Promise.all()`
+会分别执行各自的代码，如果一切顺利，会走到 `then()` 输出一个数组，但是其中一个 `异常` 则被捕获，不进入 `then(res,err)` 的第二个参数。
+这里值得注意的是，无论一同执行的异步是否会报错，`执行过程它们之间互不影响`。
+
+相信你能够很清楚知道结果
+
+```js
+1
+3
+2
+1 Error: 2
+4
+```
+
+下面看一下 `race()`
+
+#### 4.2
+
+```js
+function runAsync(x) {
+  const p = new Promise((r) => setTimeout(() => r(x, console.log(x)), 1000))
+  return p
+}
+Promise.race([runAsync(1), runAsync(2), runAsync(3)])
+  .then((res) => console.log('result: ', res))
+  .catch((err) => console.log(err))
+```
+
+`race` 有比赛，赛跑的意思，所以最后的结果会在多个 `"选手"` 中产生
+无论执行完还是抛出错误，都会各自执行完，但是 `结果有且只有一个`。
+
+结果：
+
+```js
+1
+result: 1
+2
+3
+```
+
+总结 `Promise.all() 和 Promise.race()`
+
+- `all()` 同时输出一个数组，包含所有的结果
+- `race()` 输出最快的一个结果，其余的结果会被抛弃；同步 > 异步，并且越靠前越优先
+
+遇到错误都会被捕获，也执行完所接收的任务；
+输出结果的顺序和接受顺序一致；
+
+### async/await
+
+#### 5.1
