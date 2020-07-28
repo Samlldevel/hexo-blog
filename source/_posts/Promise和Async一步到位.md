@@ -708,3 +708,41 @@ result: 1
 ### async/await
 
 #### 5.1
+
+参考 [阮一峰的网络日志](http://www.ruanyifeng.com/blog/2015/05/async.html)
+
+> async 函数就是 Generator 函数的语法糖。
+> async 函数就是将 Generator 函数的星号（\*）替换成 async，将 yield 替换成 await，仅此而已
+
+`async/await` 比 `promise` 可读性更好，也是一种异步解决方案
+如下，异步代码就像同步一样的写法，并且是可信的，不必从头再盘一次思路
+
+```js
+async function getStockPriceByName() {
+  var n1 = await getValue(400)
+  console.log(n1)
+  var n2 = await getValue(200)
+  console.log(n2)
+  var n3 = await getValue(0)
+  console.log(n3)
+  return n1
+}
+
+function getValue(timer) {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => resolve(timer), timer)
+  })
+}
+getStockPriceByName().then(function (result) {
+  console.log('result:', result)
+})
+```
+
+结果
+
+```bash
+400
+200
+0
+result: 400
+```
