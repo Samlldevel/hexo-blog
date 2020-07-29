@@ -746,3 +746,141 @@ getStockPriceByName().then(function (result) {
 0
 result: 400
 ```
+
+让我们看看 `promsie` 写法
+
+```js
+function getStockPriceByName() {
+  const p = getValue(4000)
+    .then((res) => {
+      console.log(res)
+      return getValue(2000)
+    })
+    .then((res) => {
+      console.log(res)
+      return getValue(0)
+    })
+    .then((res) => {
+      console.log(res)
+      return getValue(4000)
+    })
+  return p
+}
+
+function getValue(timer) {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => resolve(timer), timer)
+  })
+}
+getStockPriceByName().then(function (result) {
+  console.log('result:', result)
+})
+```
+
+它们的结果是一样的，当然如果只是这样看是看不清楚 `await` 是如何等待的,再看下面一个例子
+
+#### 5.2
+
+```js
+async function async1() {
+  console.log('async1 start')
+  await async2()
+  console.log('async1 end')
+}
+async function async2() {
+  console.log('async2')
+}
+async1()
+console.log('start')
+```
+
+过程分析：
+
+- 开头为函数声明，不执行，再往下看发现函数 `async1()` 被调用
+- 执行 `async1()` 输出 `async1 start`
+- 遇到 `await` 先执行里面的同步方法，输出 `async2`
+- **此处是重点**，`await` 将线程交出去，也就是把 `async` 函数剩下的代码包装成 `promise` 的 `resolve` 并且 `return` 出去
+- await 后面的代码， 即`console.log('async1 end')` 被放入 `微任务` 中，然后跳出 async1()
+- 遇到 `console.log('start')`，输出 `start`，本轮 `宏任务` 执行完，检查 `微任务`
+- 发现 `await` 产生的 微任务，输出 `async1 end`
+
+结果：
+
+```bash
+async1 start
+async2
+start
+async1 end
+```
+
+例子 5.2 可以写成 `promise`
+
+```js
+function async1() {
+  console.log('async1 start')
+  new promise((resolve, reject) => {
+    async2()
+    resolve()
+  }).then((res) => {
+    // 此处为 await 后续的代码
+    console.log('async1 end')
+  })
+}
+async function async2() {
+  console.log('async2')
+}
+async1()
+console.log('start')
+```
+
+`then()` 是不是好理解一些，当然理解了，最后还是 `await` 在使用上比较香
+
+这里就不再展开更多 `地狱式题目` 了，如果有需要，可以前往 [呆呆的掘金](https://juejin.im/post/5e58c618e51d4526ed66b5cf#heading-33)
+
+但是好用归好用，还是有些问题需要注意
+
+`promise` 与 `async/await` 一样，如果在`内部发生错误`或者被 `reject()` 那么是不会往下走的
+
+拿 5.1 举个例子
+
+```js
+async function getStockPriceByName() {
+  var n1 = await getValue(400)
+  console.log(n1)
+  var n2 = await getValue(200)
+  console.log(n2)
+  var n3 = await getValue(0)
+  console.log(n3)
+  return n1
+}
+
+function getValue(timer) {
+  return new Promise((resolve, reject) => {
+    if (200 === timer) reject('error200')
+    setTimeout(() => resolve(timer), timer)
+  })
+}
+getStockPriceByName().then(function (result) {
+  console.log('result:', result)
+})
+```
+
+结果
+
+```bash
+400
+Uncaught (in promise) error200
+```
+
+`promise` 有`catch/finally` 好搭档，
+那么 `await` 也有 `try/catch/finally`
+
+时刻谨记处理异常，不然是很危险的，~~我就老是忘记!~~
+
+---
+
+好了，有关异步的基础知识先记录到这，后续根据再深入了解更多异步的内容
+如
+
+- 根据 promiseA+实现一个自己的 promise
+- 使用异步来解决实际功能（红绿灯、加载图片等）
