@@ -44,13 +44,15 @@ render_drafts: false
 post_asset_folder: true
 relative_link: false
 future: true
-highlight:
-  enable: false
-  line_number: true
-  auto_detect: false
-  tab_replace: ''
-  wrap: true
-  hljs: false
+highlight: false
+
+# highlight:
+#   enable: false
+#   line_number: true
+#   auto_detect: false
+#   tab_replace: ''
+#   wrap: true
+#   hljs: false
 
 # Home page setting
 # path: Root path for your blogs index page. (default = '')
@@ -146,7 +148,7 @@ feed:
 # For syntax highlighting
 prism_plugin:
   mode: 'preprocess'
-  theme: 'default'
+  theme: 'material-light'
   line_number: true
 
   # Live2D

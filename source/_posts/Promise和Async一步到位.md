@@ -392,7 +392,7 @@ setTimeout(() => {
 ```js
 'promise1' Promise{<pending>}
 'promise2' Promise{<pending>}
-test5.html:102 Uncaught (in promise) Error: error!!! at test.html:102
+Uncaught (in promise) Error: error!!! at test.html:102
 'promise1' Promise{<resolved>: "success"}
 'promise2' Promise{<rejected>: Error: error!!!}
 ```
@@ -440,7 +440,7 @@ setTimeout(() => {
 'promise1' Promise{<pending>}
 'promise2' Promise{<pending>}
 'timer1'
-test5.html:102 Uncaught (in promise) Error: error!!! at test.html:102
+Uncaught (in promise) Error: error!!! at test.html:102
 'timer2'
 'promise1' Promise{<resolved>: "success"}
 'promise2' Promise{<rejected>: Error: error!!!}
