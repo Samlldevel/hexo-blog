@@ -14,7 +14,7 @@ timezone: ''
 # URL
 ## If your site is put in a subdirectory, set url as 'http://yoursite.com/child' and root as '/child/'
 url: https://github.com/Samlldevel
-root: /himoutains.github.io/
+root: /
 permalink: posts/:title.html
 permalink_defaults:
 pretty_urls:
@@ -114,9 +114,17 @@ theme: typography
 # Deployment
 ## Docs: https://hexo.io/docs/deployment.html
 deploy:
-  type: git
-  repo: https://github.com/Samlldevel/himoutains.github.io.git
-  branch: master
+  - type: git
+    repo: git@github.com:Samlldevel/himoutains.github.io.git
+    branch: master
+  - type: git
+    repo: git@gitee.com:penglianger/himoutains.github.io.git
+    branch: master
+  # type: git
+  #  repo:
+  #      github: https://github.com/Samlldevel/himoutains.github.io.git
+  #      gitee: https://gitee.com/penglianger/himoutains.github.io.git
+  # branch: master
 # deploy:
 #   type: ftpsync
 #   host: 47.95.210.159
