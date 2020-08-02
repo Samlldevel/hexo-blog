@@ -8,6 +8,8 @@ tags:
 categories: JavaScript
 ---
 
+![Asynchronous](./Promise和Async一步到位/Asynchronous.png)
+
 ### 前言
 
 > 在项目中经常接触`异步任务`, 要是相互独立还好，要是它们相互依赖，那就麻烦咯，所以我们需要掌握一些控制它们的方法（毕竟自己的代码还是应该在自己掌控之下，代码可信），控制它们加载的时机

@@ -147,8 +147,8 @@ feed:
 
 # For syntax highlighting
 prism_plugin:
-  mode: 'preprocess'
-  theme: 'material-light'
+  mode: 'realtime'
+  theme: 'default'
   line_number: true
 
   # Live2D
