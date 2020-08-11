@@ -33,7 +33,7 @@ categories: JavaScript
 
 ---
 
-#### 原型链继承
+#### 一、 原型链继承
 
 ```js
 // 首先定义了两个类型 Person 和 Teacher。
@@ -84,7 +84,7 @@ console.log(MathTeacher.age) // 23
 
 ---
 
-#### 借用构造函数继承
+#### 二、 借用构造函数继承
 
 ```js
 // 父类
@@ -118,11 +118,15 @@ Person.call(this, '王小')
 
 回头来看，第二种是为了解决 `原型链继承` 而诞生的
 
+优点：
+
 1. 使用多个`call()` 函数，能够实现多继承
 2. 只继承了父类构造函数的属性，解决了实例共享父类引用问题
 3. `call()` 函数支持传参，可以向父类传递参数
 
 看起来很不多，毕竟比原型链讲究了那么些，但是很快又发现了新的问题
+
+缺点：
 
 1. 很容易发现并不是父类的实例（毕竟是借的，不是亲生的）
 
@@ -134,6 +138,98 @@ console.log(S1 instanceof Student) // true
 2. 每次用每次都要重新调用，无法实现构造函数的复用（毕竟是别人的构造函数）
 3. 每个子类都有父类实例函数的副本，影响性能（每个人都借一次，印象不好）
 
-#### 组合继承（组合原型链继承和借用构造函数继承）（常用）
+---
+
+#### 三、 组合继承（组合原型链继承和借用构造函数继承）（常用）
+
+```js
+// 父类
+function Person(name) {
+  this.name = name
+  this.todo = function (sth) {
+    console.log(sth)
+  }
+}
+
+Person.prototype.sex = 1
+
+function Student(name) {
+  if (name) {
+    Person.call(this, name)
+  }
+  this.age = 16
+}
+
+// 原型链继承
+Student.prototype = new Person('原始人')
+
+// 可传参
+const S1 = new Student('王晓')
+const S2 = new Student()
+
+// 从子类构造函数中获取
+console.log(S1.name) // 王晓
+console.log(S1.age) // 16
+// 通过父类构造函数获取
+console.log(S2.name) // 原始人
+
+// 通过父类原型链获取
+console.log(S2.sex) //1
+```
+
+下面是实例 S2 继承关系概要
+
+```json
+ Student {
+  age: 16,
+  __proto__: {
+          name: "原始人",
+          todo: ƒ (sth),
+          __proto__: {
+                  sex: 1,
+                  constructor: ƒ Person(name),
+                  __proto__: Object
+          }
+    }
+ }
+```
+
+从实例中看到 `Student 构造函数` 中无 `name` 属性，所以会顺着 `原型链` 去查看，直到找到为止
+在 `Person 构造函数` 找到了 `name` 属性 ,在 `Person 的原型` 找到了 `sex` 属性
+
+组合继承结合了 `借用构造函数` 和 `原型链接触` 这两种方式，实现传参和复用父类的实例
+
+优点：
+
+- 继承父类属性，可传参以及复用父类的实例
+- 每个实例引入的构造函数的属性都是私有的
+
+缺点:
+
+- 调用了两次父类构造函数（一次是创建子类原型时，另一次是子类构造函数的内部）
+- 最终生成的子类型会包含了父类型的全部实例属性，需要重写这些属性（如下 S1 继承关系可见）
+
+下面是实例 S1 继承关系概要
+
+```json
+ Student {
+  age: 16,
+  name: "王晓",
+  todo: ƒ (sth),
+  __proto__: {
+          name: "原始人",
+          todo: ƒ (sth),
+          __proto__: {
+                  sex: 1,
+                  constructor: ƒ Person(name),
+                  __proto__: Object
+          }
+    }
+ }
+```
+
+---
+
+#### 四、 组合继承（组合原型链继承和借用构造函数继承）（常用）
 
 未完待续
