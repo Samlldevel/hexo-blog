@@ -8,7 +8,7 @@ tags:
 categories: JavaScript
 ---
 
-![多态 - 梦琴](./JS继承/0.jpg)
+![梦琴](./JS继承/0.jpg)
 
 {% cplayer %}
 [530986963, 531040878]
@@ -34,6 +34,8 @@ categories: JavaScript
 ---
 
 #### 一、 原型链继承
+
+> 将构造函数的原型设置为另一个构造函数的实例对象，这样就可以继承另一个原型对象的所有属性和方法，可以继续往上，最终形成原型链。
 
 ```js
 // 首先定义了两个类型 Person 和 Teacher。
@@ -85,6 +87,8 @@ console.log(MathTeacher.age) // 23
 ---
 
 #### 二、 借用构造函数继承
+
+> 为了解决原型中包含引用类型值的问题，开始使用借用构造函数，也叫伪造对象或经典继承
 
 ```js
 // 父类
@@ -141,6 +145,8 @@ console.log(S1 instanceof Student) // true
 ---
 
 #### 三、 组合继承（组合原型链继承和借用构造函数继承）（常用）
+
+> 也叫伪经典继承，将原型链和借用构造函数的技术组合到一块。使用原型链实现对原型属性和方法的继承，而通过构造函数来实现对实例属性的继承。
 
 ```js
 // 父类
@@ -230,6 +236,187 @@ console.log(S2.sex) //1
 
 ---
 
-#### 四、 组合继承（组合原型链继承和借用构造函数继承）（常用）
+#### 四、 原型式继承
 
-未完待续
+> 不自定义类型的情况下，临时创建一个构造函数，借助已有的对象作为临时构造函数的原型，然后在此基础实例化对象，并返回。
+
+```js
+// 函数容器 本质上是object()对传入其中的对象执行了一次浅复制
+function content(obj) {
+  function F() {}
+  F.prototype = obj
+  return new F()
+}
+
+// 父类
+function Person(name) {
+  this.age = 10
+  this.likes = ['吃饭', 'lol']
+}
+
+Person.prototype.sex = 0
+
+const p = new Person()
+
+const stu = content(p)
+const stu2 = content(p)
+
+console.log(stu.age) // 10
+console.log(stu.sex) // 0
+stu.likes.push('睡觉')
+
+// 引用类型会受影响
+console.log(stu2.likes) // [ '吃饭', 'lol', '睡觉' ]
+```
+
+主要也是通过原型链继承，适用于让一个对象与另一个对象保持类似的情况
+
+缺点和原型链继承缺点类似
+
+- 所有实例共享，引用类型会相互影响
+- 无法复用
+
+`注意:`
+
+ES5 通过新增 Object.create()方法规范化了原型式继承。这个方法接收两个参数：一个用作新对象原型的对象和（可选的）一个为新对象定义额外属性的对象。在传入一个参数的情况下，Object.create()与这里的 content()方法的行为相同。第二个参数与 Object.defineProperties()方法的第二个参数格式相同：每个属性都是通过自己的描述符定义的。
+
+---
+
+#### 五、 寄生式继承
+
+> 在原型式继承得到对象的基础上，在内部再以某种方式来增强对象，然后返回。
+
+```js
+// 函数容器
+function content(obj) {
+  function F() {}
+  F.prototype = obj
+  return new F()
+}
+
+// 对象加工厂
+function createStudent(obj) {
+  let clone = content(obj)
+  clone.sayHi = function () {
+    console.log('hi')
+  }
+  return clone
+}
+
+// 父类
+function Person(name) {
+  this.age = 10
+}
+
+const p = new Person()
+
+const stu1 = createStudent(p)
+
+stu1.sayHi() // hi
+```
+
+其实就是 `原型式继承` 的增强版，扩展了对象的属性和方法，缺点还是没有改进
+
+---
+
+#### 六、 寄生组合式继承（常用）
+
+> 组合继承是 JS 中最常用的继承模式，但其实它也有不足，组合继承无论什么情况下都会调用两次超类型的构造函数，并且创建的每个实例中都要屏蔽超类型对 象的所有实例属性。
+> 寄生组合式继承就解决了上述问题，被认为是最理想的继承范式。
+
+因为使用 `组合继承` ，调用了两次 Person 构造函数，现在出现了两组属性，一组在实例上，一组在 Student 原型中。
+
+回顾一下组合继承
+
+```js
+// 父类
+function Person(name) {
+  this.name = name
+  this.todo = function (sth) {
+    console.log(sth)
+  }
+}
+
+Person.prototype.sex = 1
+
+function Student(name) {
+  if (name) {
+    Person.call(this, name)
+  }
+  this.age = 16
+}
+
+// 原型链继承
+Student.prototype = new Person('原始人') // 寄生组合式继承 将会替换这行
+
+// 可传参
+const S1 = new Student('王晓')
+const S2 = new Student()
+
+// 从子类构造函数中获取
+console.log(S1.name) // 王晓
+console.log(S1.age) // 16
+// 通过父类构造函数获取
+console.log(S2.name) // 原始人
+
+// 通过父类原型链获取
+console.log(S2.sex) //1
+```
+
+寄生组合式继承
+
+```js
+function content(o) {
+  function F() {}
+  F.prototype = o
+  return new F()
+}
+
+function inheritPrototype(person, student) {
+  // 返回构造函数的实例
+  var prototype = content(person.prototype)
+  // 构造函数内部为空, 重新指定 constructor 为 Student
+  prototype.constructor = student
+  // 达到了将父类构造函数的实例作为子类型原型的目的，同时没有一些从 Person 继承过来的无用原型属性
+  student.prototype = prototype
+}
+
+// 父类
+function Person(name) {
+  this.name = name
+  this.todo = function (sth) {
+    console.log(sth)
+  }
+}
+
+Person.prototype.sex = 1
+
+function Student(name) {
+  if (name) {
+    Person.call(this, name)
+  }
+  this.age = 16
+}
+
+// Student.prototype = new Person('原始人') // 寄生组合式继承 将会替换这行
+inheritPrototype(Person, Student) // 这一句，替代了组合继承中的SubType.prototype = new Person()
+
+// 可传参
+const S1 = new Student('王晓')
+const S2 = new Student()
+
+// 从子类构造函数中获取
+console.log(S1.name) // 王晓
+console.log(S1.age) // 16
+// 通过父类构造函数获取
+console.log(S2.name) // undefined ,没有往父类构造函数传参
+
+// 通过父类原型链获取
+console.log(S2.sex) //1
+```
+
+未完。。。
+
+资料：
+[JS 实现继承的 6 种方式](https://blog.csdn.net/longyin0528/article/details/80504270)
+[JavaScript 高级程序设计: 继承](https://github.com/longyincug/Notebook/blob/master/src/JavaScript%E9%AB%98%E7%BA%A7%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1.md/#6c)
