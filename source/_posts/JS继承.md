@@ -16,7 +16,7 @@ categories: JavaScript
 
 ### 前言
 
-在开发大型项目的时候，我们经常需要用到对象，不论是使用内置对象、扩展对象或者自定义对象等，都是为了很好的把属性和方法封装在一起。所以本次我将 js 原型链以及继承自我总结一下，加强理解。
+在开发大型项目的时候，我们经常需要用到对象，不论是使用内置对象、扩展对象或者自定义对象等，都是为了很好的把属性和方法封装在一起。所以本次我将 js 原型链以及继承自我总结一下，加强理解，如理解有误，欢迎讨论交流。
 
 一张图补一下 `原型链` 的知识, 图片来自掘金作者[一灯](https://juejin.im/post/6844903826143592461)
 
@@ -282,7 +282,7 @@ ES5 通过新增 Object.create()方法规范化了原型式继承。这个方法
 
 ---
 
-#### 五、 寄生式继承
+#### 五、 寄生式继承（增强对象)
 
 > 在原型式继承得到对象的基础上，在内部再以某种方式来增强对象，然后返回。
 
@@ -326,41 +326,22 @@ stu1.sayHi() // hi
 
 因为使用 `组合继承` ，调用了两次 Person 构造函数，现在出现了两组属性，一组在实例上，一组在 Student 原型中。
 
-回顾一下组合继承
+回顾一下组合继承基本结构
 
 ```js
 // 父类
 function Person(name) {
   this.name = name
-  this.todo = function (sth) {
-    console.log(sth)
-  }
 }
 
-Person.prototype.sex = 1
-
 function Student(name) {
-  if (name) {
-    Person.call(this, name)
-  }
-  this.age = 16
+  Person.call(this, name)
 }
 
 // 原型链继承
 Student.prototype = new Person('原始人') // 寄生组合式继承 将会替换这行
 
-// 可传参
-const S1 = new Student('王晓')
-const S2 = new Student()
-
-// 从子类构造函数中获取
-console.log(S1.name) // 王晓
-console.log(S1.age) // 16
-// 通过父类构造函数获取
-console.log(S2.name) // 原始人
-
-// 通过父类原型链获取
-console.log(S2.sex) //1
+// ...
 ```
 
 寄生组合式继承
@@ -372,13 +353,16 @@ function content(o) {
   return new F()
 }
 
+// 其实只是需要父类的一个副本而已
 function inheritPrototype(person, student) {
-  // 返回构造函数的实例
-  var prototype = content(person.prototype)
-  // 构造函数内部为空, 重新指定 constructor 为 Student
-  prototype.constructor = student
-  // 达到了将父类构造函数的实例作为子类型原型的目的，同时没有一些从 Person 继承过来的无用原型属性
-  student.prototype = prototype
+  // 是创建超类型原型的一个副本
+  var prototype = content(person.prototype) // 创建对象
+
+  // 为创建的副本添加 constructor 属性，从而弥补因重写原型而失去的默认的 constructor 属性
+  prototype.constructor = student // 增强对象
+
+  // 将新创建的对象（即副本）赋值给子类型的原型
+  student.prototype = prototype // 指定对象
 }
 
 // 父类
@@ -415,8 +399,12 @@ console.log(S2.name) // undefined ,没有往父类构造函数传参
 console.log(S2.sex) //1
 ```
 
-未完。。。
+这个例子的高效率体现在它只调用了一次 `Person 构造函数`，并且因此避免了 `Student.prototype` 上面创建不必要的、多余的属性。与此同时，原型链还能保持不变；因此，还能够正常使用 `instanceof` 和 `isPrototypeOf()`。
 
-资料：
+---
+
+#### 参考资料
+
 [JS 实现继承的 6 种方式](https://blog.csdn.net/longyin0528/article/details/80504270)
 [JavaScript 高级程序设计: 继承](https://github.com/longyincug/Notebook/blob/master/src/JavaScript%E9%AB%98%E7%BA%A7%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1.md/#6c)
+[实现继承的方式](https://blog.csdn.net/yingleiming/category_9935106.html)
