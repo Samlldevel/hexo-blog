@@ -1,5 +1,5 @@
 ---
-title: Promise和Async一步到位
+title: 笔记-Promise和Async一步到位
 date: 2020-06-07 01:26:08
 desc:
 tags:
@@ -263,6 +263,7 @@ console.log('end')
 'end'
 'reslove'
 'time'
+
 ```
 
 #### 2.2
@@ -471,6 +472,7 @@ promise
 
 ```js
 'then: success1'
+
 ```
 
 Promise 的状态一经改变就不能再改变

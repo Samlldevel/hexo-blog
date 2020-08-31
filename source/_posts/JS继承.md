@@ -1,5 +1,5 @@
 ---
-title: JS继承
+title: 笔记-JS继承
 date: 2020-08-01 15:17:39
 desc:
 tags:
@@ -402,6 +402,46 @@ console.log(S2.sex) //1
 这个例子的高效率体现在它只调用了一次 `Person 构造函数`，并且因此避免了 `Student.prototype` 上面创建不必要的、多余的属性。与此同时，原型链还能保持不变；因此，还能够正常使用 `instanceof` 和 `isPrototypeOf()`。
 
 ---
+
+#### Class
+
+关键字 class 从 ES6 开始正式被引入到 JavaScript 中。class 的目的就是让定义类更简单
+
+```js
+class Person {
+  constructor(age) {
+    this.age = age
+  }
+
+  hello() {
+    console.log('输出年龄', this.age)
+  }
+
+  // 静态方法
+  static foo() {
+    console.log('static foo')
+  }
+}
+
+class Student extends Person {
+  constructor(age, name) {
+    // java 中如果不写 默认会自动生成，但是 js class super 必须在第一且不可省，
+    super(age) // 用 super 调用父类的构造方法!
+    this.name = name
+  }
+  hi() {
+    // super.hello()就相当于a.prototype.hello()
+    // this 指向子类
+    super.hello()
+  }
+}
+
+var s = new Student(16)
+
+s.hi() // 输出年龄 16
+
+Person.foo() // static foo
+```
 
 #### 参考资料
 
