@@ -17,6 +17,7 @@
     "cson": "^7.5.0",
     "hexo": "^4.0.0",
     "hexo-deployer-git": "^2.1.0",
+    "hexo-deployer-sftp": "^0.4.1",
     "hexo-generator-archive": "^1.0.0",
     "hexo-generator-category": "^1.0.0",
     "hexo-generator-category-enhance": "^0.1.6",
@@ -32,6 +33,7 @@
     "hexo-server": "^1.0.0",
     "hexo-tag-cplayer": "^1.0.0",
     "js-yaml": "^3.13.1",
+    "sftp-sync-deploy": "^0.7.1",
     "utility": "^1.16.3"
   }
 }

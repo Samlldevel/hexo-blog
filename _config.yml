@@ -114,12 +114,17 @@ theme: typography
 # Deployment
 ## Docs: https://hexo.io/docs/deployment.html
 deploy:
-  - type: git
-    repo: git@github.com:Samlldevel/himoutains.github.io.git
-    branch: master
-  - type: git
-    repo: git@gitee.com:penglianger/himoutains.github.io.git
-    branch: master
+  # - type: git
+  #   repo: git@github.com:Samlldevel/himoutains.github.io.git
+  #   branch: master
+  # - type: git
+  #   repo: git@gitee.com:penglianger/himoutains.github.io.git
+  #   branch: master
+  - type: sftp
+    host: 47.95.210.159
+    # user: root
+    # pass: '@wowo886j'
+    remotePath: /www/wwwroot/http/aaa
   # type: git
   #  repo:
   #      github: https://github.com/Samlldevel/himoutains.github.io.git
