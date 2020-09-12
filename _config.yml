@@ -13,7 +13,7 @@ timezone: ''
 
 # URL
 ## If your site is put in a subdirectory, set url as 'http://yoursite.com/child' and root as '/child/'
-url: https://github.com/Samlldevel
+url: https://github.com/PL-FE
 root: /
 permalink: :title.html
 permalink_defaults:
@@ -143,6 +143,7 @@ plugin:
   - hexo-prism-plugin
   - hexo-toc
 
+
   # Generator atom feed for you website
 feed:
   type: atom
@@ -158,6 +159,7 @@ prism_plugin:
   mode: 'realtime'
   theme: 'default'
   line_number: true
+
 
   # Live2D
 # https://github.com/EYHN/hexo-helper-live2d
