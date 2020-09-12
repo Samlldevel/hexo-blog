@@ -1,9 +1,6 @@
-name: Update gist
+name: Update Blog
 on:
   push:
-    branches:
-      - master
-  pull_request:
     branches:
       - master
   schedule:
@@ -15,7 +12,6 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - run: yarn install
-      - run: node ./deploy.js
       - name: Update gist
         uses: ./
         env:
