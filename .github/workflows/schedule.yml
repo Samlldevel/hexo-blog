@@ -12,7 +12,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - run: yarn install
-      - run: hexo generate
+      - run: yarn generate
       - name: Update Blog
         uses: ./
         env:
