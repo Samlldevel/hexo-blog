@@ -130,16 +130,6 @@ deploy:
   #      github: https://github.com/Samlldevel/himoutains.github.io.git
   #      gitee: https://gitee.com/penglianger/himoutains.github.io.git
   # branch: master
-# deploy:
-#   type: ftpsync
-#   host: 47.95.210.159
-#   user: aaa
-#   pass: aaa
-#   remote:	/
-#   port: 21
-#   ignore: []
-#   connections: 1
-#   verbose: true
 
 plugin:
   - hexo-generator-category-enhance
