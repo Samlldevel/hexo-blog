@@ -120,11 +120,11 @@ deploy:
   # - type: git
   #   repo: git@gitee.com:penglianger/himoutains.github.io.git
   #   branch: master
-  - type: sftp
-    host: ${{ secrets.HOST }}
-    user: root
-    pass: ${{ secrets.PASSWORD }}
-    remotePath: ${{ secrets.REMOTEDIR }}
+  # - type: sftp
+  #   host: ${{ secrets.HOST }}
+  #   user: root
+  #   pass: ${{ secrets.PASSWORD }}
+  #   remotePath: ${{ secrets.REMOTEDIR }}
   # type: git
   #  repo:
   #      github: https://github.com/Samlldevel/himoutains.github.io.git
