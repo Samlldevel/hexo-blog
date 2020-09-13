@@ -1,9 +1,0 @@
-name: 'deploy'
-author: 'pl'
-description: '部署到服务器'
-branding:
-  icon: 'headphones'
-  color: 'red'
-runs:
-  using: 'node12'
-  main: './deploy.js'
