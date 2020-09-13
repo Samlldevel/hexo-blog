@@ -12,9 +12,6 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: npm install 安装依赖
-        uses: actions/setup-node@v1
-        with:
-          node-version: '12.x'
         run: npm ci
       - name: npm run all 生成发布
         run: npm run all
