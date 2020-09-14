@@ -15,7 +15,7 @@
     "body_y": [0.3, -0.9]
   },
   "motions": {
-    "idle": [{ "file": "motions/Idle.mtn" }],
+    "idle": [{ "file": "motions/idle.mtn" }],
     "sleepy": [{ "file": "motions/nemui.mtn" }],
     "flick_head": [
       {
