@@ -8,7 +8,7 @@ categories:
   - 插件
 ---
 
-# 设置颜色
+![happy-path](./images/happy-path.png)
 
 官方提供了 4 中方法
 
