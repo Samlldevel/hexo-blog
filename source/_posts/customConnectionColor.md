@@ -8,8 +8,6 @@ categories:
   - 插件
 ---
 
-![happy-path](./images/happy-path.png)
-
 官方提供了 4 中方法
 
 [官方 demo](https://github.com/bpmn-io/bpmn-js-examples/tree/master/colors)

@@ -8,8 +8,6 @@ categories:
   - 插件
 ---
 
-![happy-path](./images/happy-path.png)
-
 [bpmn-js](https://github.com/bpmn-io/bpmn-js) 是 BPMN 2.0 呈现工具包和 Web 建模器。它是用 JavaScript 编写的，将 BPMN 2.0 图表嵌入到现代浏览器中，并且不需要服务器后端。这样可以轻松将其嵌入到任何 Web 应用程序中。
 
 该库以既可以查看器又可以是 Web 建模器的方式构建。使用 [viewer](https://github.com/bpmn-io/bpmn-js-examples/tree/master/url-viewer) 将 BPMN 2.0 嵌入到您的应用程序中，[并用您的数据丰富它](https://github.com/bpmn-io/bpmn-js-examples/tree/master/overlays)。使用 [modeler](https://github.com/bpmn-io/bpmn-js-examples/tree/master/modeler) 在应用程序内部创建 BPMN 2.0 图表。

@@ -8,8 +8,6 @@ categories:
   - 插件
 ---
 
-![happy-path](./images/happy-path.png)
-
 在 [自定义 Palette](./customPalette.html) 的基础上继续修改
 
 案例代码在这里取：

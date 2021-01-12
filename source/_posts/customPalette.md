@@ -8,8 +8,6 @@ categories:
   - 插件
 ---
 
-![happy-path](./images/happy-path.png)
-
 [了解 BPMN 内部](./quickIntroduction.html)后，对一些模块以及它们之间的配合应该有了一定的概念，下面开始动手尝试修改一下 `palette` 工具栏
 
 案例代码在这里取：

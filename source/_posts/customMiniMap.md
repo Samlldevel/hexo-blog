@@ -8,8 +8,6 @@ categories:
   - 插件
 ---
 
-![happy-path](./images/happy-path.png)
-
 这里比较简单，直接使用官方的插件即可，适用于流程较多较复杂的场景
 
 # 使用

@@ -8,8 +8,6 @@ categories:
   - 插件
 ---
 
-![happy-path](./images/happy-path.png)
-
 本篇 API 根据对应源码总结而得，其中部分方法待验证。
 
 ---
