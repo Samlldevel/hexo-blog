@@ -3,7 +3,6 @@ title: 笔记-JS继承
 date: 2020-08-01 15:17:39
 desc:
 tags:
-  - 知识点
   - 继承
 categories: JavaScript
 ---
@@ -41,38 +40,38 @@ categories: JavaScript
 // 首先定义了两个类型 Person 和 Teacher。
 // 父类
 function Person(name) {
-  this.name = name
+  this.name = name;
   this.todo = function (sth) {
-    console.log(sth)
-  }
+    console.log(sth);
+  };
 }
 
 // 老师
 function Teacher() {
-  this.name = '张三'
+  this.name = "张三";
 }
 
 // Person 原型 age 属性赋值
-Person.prototype.age = 23
+Person.prototype.age = 23;
 
 // 通过创建 Person 的实例（new Person()），并将该实例赋给 Teacher 的原型 （Teacher.prototype） 的方式继承了 Person。
 // 即：Teacher 的原型 （Teacher.prototype） = Person 的实例（new Person()），实现继承
-Teacher.prototype = new Person()
+Teacher.prototype = new Person();
 
 // new 一个数学老师出来
-const MathTeacher = new Teacher()
+const MathTeacher = new Teacher();
 
 // 此时存在于 Person 中实例中的所有属性和方法，也存在于 Teacher.prototype 中。
 // Teacher的实例 MathTeacher 指向 Teacher 的原型 Teacher.prototype，Teacher.prototype 又指向 Person 的原型。
 
 // MathTeacher 本身没有 todo(),todo 来自 Teacher.prototype
-MathTeacher.todo('教数学') // 教数学
+MathTeacher.todo("教数学"); // 教数学
 
 // MathTeacher 没有 name， 所以输出的是 Teacher 的 name
-console.log(MathTeacher.name) // 张三
+console.log(MathTeacher.name); // 张三
 
 // MathTeacher、Teacher.prototype（等同Person 的实例）都没有 age 属性， 这里的 age 属性来自 Person.prototype
-console.log(MathTeacher.age) // 23
+console.log(MathTeacher.age); // 23
 ```
 
 很明显，他们的关系就像是一条链，父类新增原型方法/原型属性，子类都能访问到，实现起来也很简单。
@@ -93,29 +92,29 @@ console.log(MathTeacher.age) // 23
 ```js
 // 父类
 function Person(name) {
-  this.name = name
+  this.name = name;
   this.todo = function (sth) {
-    console.log(sth)
-  }
+    console.log(sth);
+  };
 }
 
 function Student() {
-  Person.call(this, '王小')
-  this.age = 16
+  Person.call(this, "王小");
+  this.age = 16;
 }
 
-const S1 = new Student()
-console.log(S1.name) // 王小
-console.log(S1.age) // 16
-console.log(S1.sex) //undefined
-S1.todo('222') // '222'
+const S1 = new Student();
+console.log(S1.name); // 王小
+console.log(S1.age); // 16
+console.log(S1.sex); //undefined
+S1.todo("222"); // '222'
 ```
 
 RT，借用了父类的构造函数，
 关键代码是
 
 ```js
-Person.call(this, '王小')
+Person.call(this, "王小");
 ```
 
 用 [.call()](https://www.w3school.com.cn/js/js_function_call.asp) 和 [.apply()](https://www.w3school.com.cn/js/js_function_apply.asp) 将父类构造函数引入子类函数（在子类函数中做了父类函数的自执行（复制））
@@ -135,8 +134,8 @@ Person.call(this, '王小')
 1. 很容易发现并不是父类的实例（毕竟是借的，不是亲生的）
 
 ```js
-console.log(S1 instanceof Person) // false
-console.log(S1 instanceof Student) // true
+console.log(S1 instanceof Person); // false
+console.log(S1 instanceof Student); // true
 ```
 
 2. 每次用每次都要重新调用，无法实现构造函数的复用（毕竟是别人的构造函数）
@@ -151,36 +150,36 @@ console.log(S1 instanceof Student) // true
 ```js
 // 父类
 function Person(name) {
-  this.name = name
+  this.name = name;
   this.todo = function (sth) {
-    console.log(sth)
-  }
+    console.log(sth);
+  };
 }
 
-Person.prototype.sex = 1
+Person.prototype.sex = 1;
 
 function Student(name) {
   if (name) {
-    Person.call(this, name)
+    Person.call(this, name);
   }
-  this.age = 16
+  this.age = 16;
 }
 
 // 原型链继承
-Student.prototype = new Person('原始人')
+Student.prototype = new Person("原始人");
 
 // 可传参
-const S1 = new Student('王晓')
-const S2 = new Student()
+const S1 = new Student("王晓");
+const S2 = new Student();
 
 // 从子类构造函数中获取
-console.log(S1.name) // 王晓
-console.log(S1.age) // 16
+console.log(S1.name); // 王晓
+console.log(S1.age); // 16
 // 通过父类构造函数获取
-console.log(S2.name) // 原始人
+console.log(S2.name); // 原始人
 
 // 通过父类原型链获取
-console.log(S2.sex) //1
+console.log(S2.sex); //1
 ```
 
 下面是实例 S2 继承关系概要
@@ -244,29 +243,29 @@ console.log(S2.sex) //1
 // 函数容器 本质上是object()对传入其中的对象执行了一次浅复制
 function content(obj) {
   function F() {}
-  F.prototype = obj
-  return new F()
+  F.prototype = obj;
+  return new F();
 }
 
 // 父类
 function Person(name) {
-  this.age = 10
-  this.likes = ['吃饭', 'lol']
+  this.age = 10;
+  this.likes = ["吃饭", "lol"];
 }
 
-Person.prototype.sex = 0
+Person.prototype.sex = 0;
 
-const p = new Person()
+const p = new Person();
 
-const stu = content(p)
-const stu2 = content(p)
+const stu = content(p);
+const stu2 = content(p);
 
-console.log(stu.age) // 10
-console.log(stu.sex) // 0
-stu.likes.push('睡觉')
+console.log(stu.age); // 10
+console.log(stu.sex); // 0
+stu.likes.push("睡觉");
 
 // 引用类型会受影响
-console.log(stu2.likes) // [ '吃饭', 'lol', '睡觉' ]
+console.log(stu2.likes); // [ '吃饭', 'lol', '睡觉' ]
 ```
 
 主要也是通过原型链继承，适用于让一个对象与另一个对象保持类似的情况
@@ -290,29 +289,29 @@ ES5 通过新增 Object.create()方法规范化了原型式继承。这个方法
 // 函数容器
 function content(obj) {
   function F() {}
-  F.prototype = obj
-  return new F()
+  F.prototype = obj;
+  return new F();
 }
 
 // 对象加工厂
 function createStudent(obj) {
-  let clone = content(obj)
+  let clone = content(obj);
   clone.sayHi = function () {
-    console.log('hi')
-  }
-  return clone
+    console.log("hi");
+  };
+  return clone;
 }
 
 // 父类
 function Person(name) {
-  this.age = 10
+  this.age = 10;
 }
 
-const p = new Person()
+const p = new Person();
 
-const stu1 = createStudent(p)
+const stu1 = createStudent(p);
 
-stu1.sayHi() // hi
+stu1.sayHi(); // hi
 ```
 
 其实就是 `原型式继承` 的增强版，扩展了对象的属性和方法，缺点还是没有改进
@@ -331,15 +330,15 @@ stu1.sayHi() // hi
 ```js
 // 父类
 function Person(name) {
-  this.name = name
+  this.name = name;
 }
 
 function Student(name) {
-  Person.call(this, name)
+  Person.call(this, name);
 }
 
 // 原型链继承
-Student.prototype = new Person('原始人') // 寄生组合式继承 将会替换这行
+Student.prototype = new Person("原始人"); // 寄生组合式继承 将会替换这行
 
 // ...
 ```
@@ -349,54 +348,54 @@ Student.prototype = new Person('原始人') // 寄生组合式继承 将会替�
 ```js
 function content(o) {
   function F() {}
-  F.prototype = o
-  return new F()
+  F.prototype = o;
+  return new F();
 }
 
 // 其实只是需要父类的一个副本而已
 function inheritPrototype(person, student) {
   // 是创建超类型原型的一个副本
-  var prototype = content(person.prototype) // 创建对象
+  var prototype = content(person.prototype); // 创建对象
 
   // 为创建的副本添加 constructor 属性，从而弥补因重写原型而失去的默认的 constructor 属性
-  prototype.constructor = student // 增强对象
+  prototype.constructor = student; // 增强对象
 
   // 将新创建的对象（即副本）赋值给子类型的原型
-  student.prototype = prototype // 指定对象
+  student.prototype = prototype; // 指定对象
 }
 
 // 父类
 function Person(name) {
-  this.name = name
+  this.name = name;
   this.todo = function (sth) {
-    console.log(sth)
-  }
+    console.log(sth);
+  };
 }
 
-Person.prototype.sex = 1
+Person.prototype.sex = 1;
 
 function Student(name) {
   if (name) {
-    Person.call(this, name)
+    Person.call(this, name);
   }
-  this.age = 16
+  this.age = 16;
 }
 
 // Student.prototype = new Person('原始人') // 寄生组合式继承 将会替换这行
-inheritPrototype(Person, Student) // 这一句，替代了组合继承中的SubType.prototype = new Person()
+inheritPrototype(Person, Student); // 这一句，替代了组合继承中的SubType.prototype = new Person()
 
 // 可传参
-const S1 = new Student('王晓')
-const S2 = new Student()
+const S1 = new Student("王晓");
+const S2 = new Student();
 
 // 从子类构造函数中获取
-console.log(S1.name) // 王晓
-console.log(S1.age) // 16
+console.log(S1.name); // 王晓
+console.log(S1.age); // 16
 // 通过父类构造函数获取
-console.log(S2.name) // undefined ,没有往父类构造函数传参
+console.log(S2.name); // undefined ,没有往父类构造函数传参
 
 // 通过父类原型链获取
-console.log(S2.sex) //1
+console.log(S2.sex); //1
 ```
 
 这个例子的高效率体现在它只调用了一次 `Person 构造函数`，并且因此避免了 `Student.prototype` 上面创建不必要的、多余的属性。与此同时，原型链还能保持不变；因此，还能够正常使用 `instanceof` 和 `isPrototypeOf()`。
@@ -410,37 +409,37 @@ console.log(S2.sex) //1
 ```js
 class Person {
   constructor(age) {
-    this.age = age
+    this.age = age;
   }
 
   hello() {
-    console.log('输出年龄', this.age)
+    console.log("输出年龄", this.age);
   }
 
   // 静态方法
   static foo() {
-    console.log('static foo')
+    console.log("static foo");
   }
 }
 
 class Student extends Person {
   constructor(age, name) {
     // java 中如果不写 默认会自动生成，但是 js class super 必须在第一且不可省，
-    super(age) // 用 super 调用父类的构造方法!
-    this.name = name
+    super(age); // 用 super 调用父类的构造方法!
+    this.name = name;
   }
   hi() {
     // super.hello()就相当于a.prototype.hello()
     // this 指向子类
-    super.hello()
+    super.hello();
   }
 }
 
-var s = new Student(16)
+var s = new Student(16);
 
-s.hi() // 输出年龄 16
+s.hi(); // 输出年龄 16
 
-Person.foo() // static foo
+Person.foo(); // static foo
 ```
 
 #### 参考资料

@@ -3,7 +3,8 @@ title: 笔记-Promise和Async一步到位
 date: 2020-06-07 01:26:08
 desc:
 tags:
-  - 知识点
+  - Promise
+  - Async
   - 异步
 categories: JavaScript
 ---
@@ -61,9 +62,9 @@ event loop 的执行顺序：
 
 ```js
 const promise1 = new Promise((resolve, reject) => {
-  console.log('promise1')
-})
-console.log('1', promise1)
+  console.log("promise1");
+});
+console.log("1", promise1);
 ```
 
 过程分析：
@@ -86,14 +87,14 @@ console.log('1', promise1)
 
 ```js
 const promise = new Promise((resolve, reject) => {
-  console.log(1)
-  resolve('success')
-  console.log(2)
-})
+  console.log(1);
+  resolve("success");
+  console.log(2);
+});
 promise.then(() => {
-  console.log(3)
-})
-console.log(4)
+  console.log(3);
+});
+console.log(4);
 ```
 
 过程分析：
@@ -116,13 +117,13 @@ console.log(4)
 
 ```js
 const promise = new Promise((resolve, reject) => {
-  console.log(1)
-  console.log(2)
-})
+  console.log(1);
+  console.log(2);
+});
 promise.then(() => {
-  console.log(3)
-})
-console.log(4)
+  console.log(3);
+});
+console.log(4);
 ```
 
 过程分析：
@@ -139,14 +140,14 @@ console.log(4)
 
 ```js
 const promise1 = new Promise((resolve, reject) => {
-  console.log('promise1')
-  resolve('resolve1')
-})
+  console.log("promise1");
+  resolve("resolve1");
+});
 const promise2 = promise1.then((res) => {
-  console.log(res)
-})
-console.log('1', promise1)
-console.log('2', promise2)
+  console.log(res);
+});
+console.log("1", promise1);
+console.log("2", promise2);
 ```
 
 过程分析：
@@ -178,13 +179,13 @@ console.log('2', promise2)
 ```js
 const fn = () =>
   new Promise((resolve, reject) => {
-    console.log(1)
-    resolve('success')
-  })
+    console.log(1);
+    resolve("success");
+  });
 fn().then((res) => {
-  console.log(res)
-})
-console.log('start')
+  console.log(res);
+});
+console.log("start");
 ```
 
 要点：`函数调用时才执行内部逻辑`
@@ -211,13 +212,13 @@ console.log('start')
 ```js
 const fn = () =>
   new Promise((resolve, reject) => {
-    console.log(1)
-    resolve('success')
-  })
-console.log('start')
+    console.log(1);
+    resolve("success");
+  });
+console.log("start");
 fn().then((res) => {
-  console.log(res)
-})
+  console.log(res);
+});
 ```
 
 若是 fn 在最后调用，结果也很明显了
@@ -235,14 +236,14 @@ fn().then((res) => {
 #### 2.1
 
 ```js
-console.log('start')
+console.log("start");
 setTimeout(() => {
-  console.log('time')
-})
+  console.log("time");
+});
 Promise.resolve().then(() => {
-  console.log('resolve')
-})
-console.log('end')
+  console.log("resolve");
+});
+console.log("end");
 ```
 
 要点：`setTimeout`为延迟任务，添加到下一轮宏任务，并且到时间才会被入栈
@@ -259,10 +260,10 @@ console.log('end')
 输出:
 
 ```js
-'start'
-'end'
-'reslove'
-'time'
+"start";
+"end";
+"reslove";
+"time";
 
 ```
 
@@ -270,18 +271,18 @@ console.log('end')
 
 ```js
 const promise = new Promise((resolve, reject) => {
-  console.log(1)
+  console.log(1);
   setTimeout(() => {
-    console.log('timerStart')
-    resolve('success')
-    console.log('timerEnd')
-  }, 0)
-  console.log(2)
-})
+    console.log("timerStart");
+    resolve("success");
+    console.log("timerEnd");
+  }, 0);
+  console.log(2);
+});
 promise.then((res) => {
-  console.log(res)
-})
-console.log(4)
+  console.log(res);
+});
+console.log(4);
 ```
 
 要点：`setTimeout` 为宏任务, `promise.then()` 状态为 `padding` 不执行
@@ -317,18 +318,18 @@ console.log(4)
 
 ```js
 Promise.resolve().then(() => {
-  console.log('promise1')
+  console.log("promise1");
   const timer2 = setTimeout(() => {
-    console.log('timer2')
-  }, 0)
-})
+    console.log("timer2");
+  }, 0);
+});
 const timer1 = setTimeout(() => {
-  console.log('timer1')
+  console.log("timer1");
   Promise.resolve().then(() => {
-    console.log('promise2')
-  })
-}, 0)
-console.log('start')
+    console.log("promise2");
+  });
+}, 0);
+console.log("start");
 ```
 
 要点：
@@ -373,18 +374,18 @@ console.log('start')
 ```js
 const promise1 = new Promise((resolve, reject) => {
   setTimeout(() => {
-    resolve('success')
-  }, 1000)
-})
+    resolve("success");
+  }, 1000);
+});
 const promise2 = promise1.then(() => {
-  throw new Error('error!!!')
-})
-console.log('promise1', promise1)
-console.log('promise2', promise2)
+  throw new Error("error!!!");
+});
+console.log("promise1", promise1);
+console.log("promise2", promise2);
 setTimeout(() => {
-  console.log('promise1', promise1)
-  console.log('promise2', promise2)
-}, 2000)
+  console.log("promise1", promise1);
+  console.log("promise2", promise2);
+}, 2000);
 ```
 
 总结：
@@ -405,21 +406,21 @@ Uncaught (in promise) Error: error!!! at test.html:102
 ```js
 const promise1 = new Promise((resolve, reject) => {
   setTimeout(() => {
-    resolve('success')
-    console.log('timer1')
-  }, 1000)
-  console.log('promise1里的内容')
-})
+    resolve("success");
+    console.log("timer1");
+  }, 1000);
+  console.log("promise1里的内容");
+});
 const promise2 = promise1.then(() => {
-  throw new Error('error!!!')
-})
-console.log('promise1', promise1)
-console.log('promise2', promise2)
+  throw new Error("error!!!");
+});
+console.log("promise1", promise1);
+console.log("promise2", promise2);
 setTimeout(() => {
-  console.log('timer2')
-  console.log('promise1', promise1)
-  console.log('promise2', promise2)
-}, 2000)
+  console.log("timer2");
+  console.log("promise1", promise1);
+  console.log("promise2", promise2);
+}, 2000);
 ```
 
 过程分析：
@@ -455,23 +456,23 @@ Uncaught (in promise) Error: error!!! at test.html:102
 
 ```js
 const promise = new Promise((resolve, reject) => {
-  resolve('success1')
-  reject('error')
-  resolve('success2')
-})
+  resolve("success1");
+  reject("error");
+  resolve("success2");
+});
 promise
   .then((res) => {
-    console.log('then: ', res)
+    console.log("then: ", res);
   })
   .catch((err) => {
-    console.log('catch: ', err)
-  })
+    console.log("catch: ", err);
+  });
 ```
 
 结果:
 
 ```js
-'then: success1'
+"then: success1";
 
 ```
 
@@ -482,20 +483,20 @@ Promise 的状态一经改变就不能再改变
 ```js
 Promise.reject(1)
   .then((res) => {
-    console.log(res)
-    return 2
+    console.log(res);
+    return 2;
   })
   .catch((err) => {
-    console.log(err)
-    return 3
+    console.log(err);
+    return 3;
   })
   .then((res) => {
-    console.log(res)
-    return new Error('error!!!')
+    console.log(res);
+    return new Error("error!!!");
   })
   .then((res) => {
-    console.log(res)
-  })
+    console.log(res);
+  });
 ```
 
 - catch() 不管被连接到哪里，都能捕获上层未捕捉过的错误
@@ -522,9 +523,9 @@ throw new Error('error!!!')
 
 ```js
 const promise = Promise.resolve().then(() => {
-  return promise
-})
-promise.catch(console.err)
+  return promise;
+});
+promise.catch(console.err);
 ```
 
 `.then` 或 `.catch()` 不能返回 promise 本身，不然会造成死循环。
@@ -538,7 +539,7 @@ Promise {<rejected>: TypeError: Chaining cycle detected for promise #<Promise>}
 #### 3.4
 
 ```js
-Promise.resolve(1).then(2).then(Promise.resolve(3)).then(console.log)
+Promise.resolve(1).then(2).then(Promise.resolve(3)).then(console.log);
 ```
 
 中间的两个 `then` 不是一个函数，则 `1` 会往下走
@@ -546,24 +547,24 @@ Promise.resolve(1).then(2).then(Promise.resolve(3)).then(console.log)
 结果：
 
 ```js
-1
+1;
 ```
 
 #### 3.5
 
 ```js
-Promise.reject('err!!!')
+Promise.reject("err!!!")
   .then(
     (res) => {
-      console.log('success', res)
+      console.log("success", res);
     },
     (err) => {
-      console.log('error', err)
+      console.log("error", err);
     }
   )
   .catch((err) => {
-    console.log('catch', err)
-  })
+    console.log("catch", err);
+  });
 ```
 
 结果：
@@ -580,29 +581,29 @@ Promise.reject('err!!!')
 ```js
 function promise1() {
   let p = new Promise((resolve) => {
-    console.log('promise1')
-    resolve('1')
-  })
-  return p
+    console.log("promise1");
+    resolve("1");
+  });
+  return p;
 }
 function promise2() {
   return new Promise((resolve, reject) => {
-    reject('error')
-  })
+    reject("error");
+  });
 }
 promise1()
   .then((res) => {
-    console.log(res)
-    return 'finally 会传下去'
+    console.log(res);
+    return "finally 会传下去";
   })
   .catch((err) => console.log(err))
-  .finally(() => console.log('finally1'))
-  .then((res) => console.log(res))
+  .finally(() => console.log("finally1"))
+  .then((res) => console.log(res));
 
 promise2()
   .then((res) => console.log(res))
   .catch((err) => console.log(err))
-  .finally(() => console.log('finally2'))
+  .finally(() => console.log("finally2"));
 ```
 
 - 链式调用都需要等上一个完成才可以执行，所以 `promise1` 的 `then` 不会马上到 `finally`
@@ -636,29 +637,29 @@ finally2
 
 ```js
 function runAsync(x) {
-  const p = new Promise((r) => setTimeout(() => r(x, console.log(x)), 1000))
-  return p
+  const p = new Promise((r) => setTimeout(() => r(x, console.log(x)), 1000));
+  return p;
 }
 function runReject(x) {
   const p = new Promise((res, rej) =>
     setTimeout(() => rej(`Error: ${x}`, console.log(x)), 1000 * x)
-  )
-  return p
+  );
+  return p;
 }
 
 Promise.all([runAsync(1), runAsync(4), runAsync(3), runAsync(2)])
   .then((res) => console.log(res))
-  .catch((err) => console.log(err))
+  .catch((err) => console.log(err));
 
 Promise.all([runAsync(1), runReject(4), runAsync(3), runReject(2)])
   .then((res) => console.log(res))
-  .catch((err) => console.log(err))
+  .catch((err) => console.log(err));
 ```
 
 按道理，第一个 `Promise.all()` 会输出一个数组 `[...]`，里面包含了所有的结果
 
 ```js
-;[1, 2, 3, 4]
+[1, 2, 3, 4];
 ```
 
 接着第二个`Promise.all()`
@@ -681,12 +682,12 @@ Promise.all([runAsync(1), runReject(4), runAsync(3), runReject(2)])
 
 ```js
 function runAsync(x) {
-  const p = new Promise((r) => setTimeout(() => r(x, console.log(x)), 1000))
-  return p
+  const p = new Promise((r) => setTimeout(() => r(x, console.log(x)), 1000));
+  return p;
 }
 Promise.race([runAsync(1), runAsync(2), runAsync(3)])
-  .then((res) => console.log('result: ', res))
-  .catch((err) => console.log(err))
+  .then((res) => console.log("result: ", res))
+  .catch((err) => console.log(err));
 ```
 
 `race` 有比赛，赛跑的意思，所以最后的结果会在多个 `"选手"` 中产生
@@ -695,10 +696,10 @@ Promise.race([runAsync(1), runAsync(2), runAsync(3)])
 结果：
 
 ```js
-1
-result: 1
-2
-3
+1;
+result: 1;
+2;
+3;
 ```
 
 总结 `Promise.all() 和 Promise.race()`
@@ -723,23 +724,23 @@ result: 1
 
 ```js
 async function getStockPriceByName() {
-  var n1 = await getValue(400)
-  console.log(n1)
-  var n2 = await getValue(200)
-  console.log(n2)
-  var n3 = await getValue(0)
-  console.log(n3)
-  return n1
+  var n1 = await getValue(400);
+  console.log(n1);
+  var n2 = await getValue(200);
+  console.log(n2);
+  var n3 = await getValue(0);
+  console.log(n3);
+  return n1;
 }
 
 function getValue(timer) {
   return new Promise((resolve, reject) => {
-    setTimeout(() => resolve(timer), timer)
-  })
+    setTimeout(() => resolve(timer), timer);
+  });
 }
 getStockPriceByName().then(function (result) {
-  console.log('result:', result)
-})
+  console.log("result:", result);
+});
 ```
 
 结果
@@ -757,28 +758,28 @@ result: 400
 function getStockPriceByName() {
   const p = getValue(4000)
     .then((res) => {
-      console.log(res)
-      return getValue(2000)
+      console.log(res);
+      return getValue(2000);
     })
     .then((res) => {
-      console.log(res)
-      return getValue(0)
+      console.log(res);
+      return getValue(0);
     })
     .then((res) => {
-      console.log(res)
-      return getValue(4000)
-    })
-  return p
+      console.log(res);
+      return getValue(4000);
+    });
+  return p;
 }
 
 function getValue(timer) {
   return new Promise((resolve, reject) => {
-    setTimeout(() => resolve(timer), timer)
-  })
+    setTimeout(() => resolve(timer), timer);
+  });
 }
 getStockPriceByName().then(function (result) {
-  console.log('result:', result)
-})
+  console.log("result:", result);
+});
 ```
 
 它们的结果是一样的，当然如果只是这样看是看不清楚 `await` 是如何等待的,再看下面一个例子
@@ -787,15 +788,15 @@ getStockPriceByName().then(function (result) {
 
 ```js
 async function async1() {
-  console.log('async1 start')
-  await async2()
-  console.log('async1 end')
+  console.log("async1 start");
+  await async2();
+  console.log("async1 end");
 }
 async function async2() {
-  console.log('async2')
+  console.log("async2");
 }
-async1()
-console.log('start')
+async1();
+console.log("start");
 ```
 
 过程分析：
@@ -821,20 +822,20 @@ async1 end
 
 ```js
 function async1() {
-  console.log('async1 start')
+  console.log("async1 start");
   new promise((resolve, reject) => {
-    async2()
-    resolve()
+    async2();
+    resolve();
   }).then((res) => {
     // 此处为 await 后续的代码
-    console.log('async1 end')
-  })
+    console.log("async1 end");
+  });
 }
 async function async2() {
-  console.log('async2')
+  console.log("async2");
 }
-async1()
-console.log('start')
+async1();
+console.log("start");
 ```
 
 `then()` 是不是好理解一些，当然理解了，最后还是 `await` 在使用上比较香
@@ -849,24 +850,24 @@ console.log('start')
 
 ```js
 async function getStockPriceByName() {
-  var n1 = await getValue(400)
-  console.log(n1)
-  var n2 = await getValue(200)
-  console.log(n2)
-  var n3 = await getValue(0)
-  console.log(n3)
-  return n1
+  var n1 = await getValue(400);
+  console.log(n1);
+  var n2 = await getValue(200);
+  console.log(n2);
+  var n3 = await getValue(0);
+  console.log(n3);
+  return n1;
 }
 
 function getValue(timer) {
   return new Promise((resolve, reject) => {
-    if (200 === timer) reject('error200')
-    setTimeout(() => resolve(timer), timer)
-  })
+    if (200 === timer) reject("error200");
+    setTimeout(() => resolve(timer), timer);
+  });
 }
 getStockPriceByName().then(function (result) {
-  console.log('result:', result)
-})
+  console.log("result:", result);
+});
 ```
 
 结果
