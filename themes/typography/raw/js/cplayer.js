@@ -9,7 +9,7 @@ let cplayer = {
 
     let getLyric = id => {
       return new Promise((resolve, reject) => {
-        fetch("https://api.imjad.cn/cloudmusic/?type=lyric&id=" + id).then(res => {
+        fetch("http://cloud-music.pengliang.online/lyric?id=" + id).then(res => {
           return res.json()
         }).then(data => {
           // console.log(data)
@@ -28,26 +28,29 @@ let cplayer = {
       })
     }
 
-    function loadcplayer(cplayer) {
-      if(!cplayer) return
+    function loadcplayer (cplayer) {
+      if (!cplayer) return
       if (typeof window.cplayerList === 'undefined') window.cplayerList = {};
       if (typeof window.cplayerList[cplayerId] !== 'undefined') return;
-      if (!cplayer.prototype.add163) cplayer.prototype.add163 = async function add163(id) {
+      if (!cplayer.prototype.add163) cplayer.prototype.add163 = async function add163 (id) {
         if (!id) throw new Error("Unable Property.");
         let lyric = await getLyric(id);
         // console.log(lyric)
 
-        return fetch("https://api.imjad.cn/cloudmusic/?type=detail&id=" + id).then(function (res) { return res.json() }).then(function (data) {
-          let obj = {
-            name: data.songs[0].name,
-            artist: data.songs[0].ar.map(function (ar) { return ar.name }).join(','),
-            poster: data.songs[0].al.picUrl,
-            lyric: lyric.lyric,
-            sublyric: lyric.tlyric,
-            src: 'https://api.imjad.cn/cloudmusic/?type=song&raw=true&id=' + id
-          }
-          this.add(obj);
-          return obj;
+        return fetch("http://cloud-music.pengliang.online/song/detail?ids=" + id).then(function (res) { return res.json() }).then(function (data) {
+          fetch("http://cloud-music.pengliang.online/song/url?id=" + id).then(function (res) { return res.json() }).then(songs => {
+            console.log('songs', songs)
+            let obj = {
+              name: data.songs[0].name,
+              artist: data.songs[0].ar.map(function (ar) { return ar.name }).join(','),
+              poster: data.songs[0].al.picUrl,
+              lyric: lyric.lyric,
+              sublyric: lyric.tlyric,
+              src: songs.data[0].url
+            }
+            this.add(obj);
+            return obj;
+          })
         }.bind(this))
       }
 

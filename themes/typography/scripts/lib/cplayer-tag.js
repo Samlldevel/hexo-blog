@@ -4,60 +4,60 @@ const scriptID = 'cplayer-script';
 const yaml = require('js-yaml');
 require('isomorphic-fetch');
 
-module.exports = function(args, contents) {
-        let autoplay = false;
+module.exports = function (args, contents) {
+  let autoplay = false;
 
-        let targetID = 'cplayer-' + utils.randomString(8, '1234567890');
+  let targetID = 'cplayer-' + utils.randomString(8, '1234567890');
 
-        let parser = 'yaml'
+  let parser = 'yaml'
 
-        args.forEach((arg) => {
-            switch (arg.trim()) {
-                case "autoplay":
-                    autoplay = true;
-                    break;
-                case "yaml":
-                    parser = 'yaml';
-                    break;
-                case "cson":
-                    parser = 'cson';
-                    break;
-                case "json":
-                    parser = 'json';
-                    break;
-                default:
-                    break;
-            }
-        })
+  args.forEach((arg) => {
+    switch (arg.trim()) {
+      case "autoplay":
+        autoplay = true;
+        break;
+      case "yaml":
+        parser = 'yaml';
+        break;
+      case "cson":
+        parser = 'cson';
+        break;
+      case "json":
+        parser = 'json';
+        break;
+      default:
+        break;
+    }
+  })
 
-        function parse(content, parser) {
-            switch (parser) {
-                case 'json':
-                    return JSON.parse(content);
-                case 'cson':
-                    return cson.parse(content);
-                case 'yaml':
-                    return yaml.load(content)
-            }
-        }
+  function parse (content, parser) {
+    switch (parser) {
+      case 'json':
+        return JSON.parse(content);
+      case 'cson':
+        return cson.parse(content);
+      case 'yaml':
+        return yaml.load(content)
+    }
+  }
 
-        let playlist = parse(contents, parser);
+  let playlist = parse(contents, parser);
 
-        let resPlaylist = [{ name: 'loading...', artist: 'loading...' }];
-        let add163 = [];
+  let resPlaylist = [{ name: 'loading...', artist: 'loading...' }];
+  let add163 = [];
 
-        playlist = playlist.forEach(function(v) {
-            switch (typeof v) {
-                case 'number':
-                    add163.push(v);
-                    break;
-                default:
-                    resPlaylist.push(v);
-                    break;
-            }
-        });
+  playlist = playlist.forEach(function (v) {
+    switch (typeof v) {
+      case 'number':
+        add163.push(v);
+        break;
+      default:
+        resPlaylist.push(v);
+        break;
+    }
+  });
 
-        return `
+  return `
     <div class="cplayer-template"
       id=${JSON.stringify(targetID)}
       data-id=${JSON.stringify(targetID)}
@@ -71,7 +71,7 @@ module.exports = function(args, contents) {
 
         let getLyric = id => {
           return new Promise((resolve, reject) => {
-            fetch("https://api.imjad.cn/cloudmusic/?type=lyric&id=" + id).then(res => {
+            fetch("http://cloud-music.pengliang.online/lyric?id=" + id).then(res => {
               return res.json()
             }).then(data => {
               // console.log(data)
@@ -98,17 +98,20 @@ module.exports = function(args, contents) {
             let lyric = await getLyric(id);
             // console.log(lyric)
 
-            return fetch("https://api.imjad.cn/cloudmusic/?type=detail&id=" + id).then(function(res){return res.json()}).then(function(data){
-              let obj = {
-                name: data.songs[0].name,
-                artist: data.songs[0].ar.map(function(ar){ return ar.name }).join(','),
-                poster: data.songs[0].al.picUrl,
-                lyric: lyric.lyric,
-                sublyric: lyric.tlyric,
-                src: 'https://api.imjad.cn/cloudmusic/?type=song&raw=true&id=' + id
-              }
-              this.add(obj);
-              return obj;
+            return fetch("http://cloud-music.pengliang.online/song/detail?ids=" + id).then(function(res){return res.json()}).then(function(data){
+              fetch("http://cloud-music.pengliang.online/song/url?id=" + id).then(function (res) { return res.json() }).then(songs => {
+                console.log('songs', songs)
+            let obj = {
+              name: data.songs[0].name,
+              artist: data.songs[0].ar.map(function (ar) { return ar.name }).join(','),
+              poster: data.songs[0].al.picUrl,
+              lyric: lyric.lyric,
+              sublyric: lyric.tlyric,
+              src: songs.data[0].url
+            }
+            this.add(obj);
+            return obj;
+          })
             }.bind(this))
           }
 
@@ -190,10 +193,9 @@ module.exports = function(args, contents) {
                     \`
           });
 
-          ${
-    add163.map((a) => {
-      return `window.cplayerList[${JSON.stringify(targetID)}].add163(${JSON.stringify(a)})`
-    }) || ''
+          ${add163.map((a) => {
+    return `window.cplayerList[${JSON.stringify(targetID)}].add163(${JSON.stringify(a)})`
+  }) || ''
     }
 
           let player = window.cplayerList[${JSON.stringify(targetID)}]
