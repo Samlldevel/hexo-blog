@@ -9,7 +9,7 @@ let cplayer = {
 
     let getLyric = id => {
       return new Promise((resolve, reject) => {
-        fetch("http://cloud-music.pengliang.online/lyric?id=" + id).then(res => {
+        fetch("https://pengliang.online/cloud-music-api/lyric?id=" + id).then(res => {
           return res.json()
         }).then(data => {
           // console.log(data)
@@ -37,8 +37,8 @@ let cplayer = {
         let lyric = await getLyric(id);
         // console.log(lyric)
 
-        return fetch("http://cloud-music.pengliang.online/song/detail?ids=" + id).then(function (res) { return res.json() }).then(function (data) {
-          fetch("http://cloud-music.pengliang.online/song/url?id=" + id).then(function (res) { return res.json() }).then(songs => {
+        return fetch("https://pengliang.online/cloud-music-api/song/detail?ids=" + id).then(function (res) { return res.json() }).then(function (data) {
+          fetch("https://pengliang.online/cloud-music-api/song/url?id=" + id).then(function (res) { return res.json() }).then(songs => {
             console.log('songs', songs)
             let obj = {
               name: data.songs[0].name,

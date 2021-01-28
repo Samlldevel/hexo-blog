@@ -23,12 +23,22 @@ categories:
 
 #### 准备
 
-首先得有个服务器，然后搭上 `Nginx`，为了方便点，我绑定了域名 [http://cloud-music.pengliang.online/](http://cloud-music.pengliang.online/)
+首先得有个服务器，然后搭上 `Nginx`，为了方便点，~~我绑定了域名 [http://cloud-music.pengliang.online/](http://cloud-music.pengliang.online/)~~
 
 将 `网易云API` 的 node 应用部署在 `Nginx` 中
 
 API : [https://neteasecloudmusicapi.vercel.app/#/](https://neteasecloudmusicapi.vercel.app/#/)
 Github : [https://github.com/Binaryify/NeteaseCloudMusicApi](https://github.com/Binaryify/NeteaseCloudMusicApi)
+
+> 好吧~ 😥 `https` 域名下不能混合 `http`请求， 改为 [https://pengliang.online/cloud-music-api/](https://pengliang.online/cloud-music-api/)
+
+在 `nginx` 配置请求转发就可以解决问题
+
+```
+ location /cloud-music-api/ {
+        proxy_pass http://cloud-music.pengliang.online/;
+    }
+```
 
 ---
 
