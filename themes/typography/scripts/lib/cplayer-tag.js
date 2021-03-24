@@ -71,7 +71,7 @@ module.exports = function (args, contents) {
 
         let getLyric = id => {
           return new Promise((resolve, reject) => {
-            fetch("https://pengliang.online/cloud-music-api/lyric?id=" + id).then(res => {
+            fetch("https://pl-fe.cn/cloud-music-api/lyric?id=" + id).then(res => {
               return res.json()
             }).then(data => {
               // console.log(data)
@@ -98,8 +98,8 @@ module.exports = function (args, contents) {
             let lyric = await getLyric(id);
             // console.log(lyric)
 
-            return fetch("https://pengliang.online/cloud-music-api/song/detail?ids=" + id).then(function(res){return res.json()}).then(function(data){
-              fetch("https://pengliang.online/cloud-music-api/song/url?id=" + id).then(function (res) { return res.json() }).then(songs => {
+            return fetch("https://pl-fe.cn/cloud-music-api/song/detail?ids=" + id).then(function(res){return res.json()}).then(function(data){
+              fetch("https://pl-fe.cn/cloud-music-api/song/url?id=" + id).then(function (res) { return res.json() }).then(songs => {
                 console.log('songs', songs)
             let obj = {
               name: data.songs[0].name,

@@ -17,11 +17,11 @@ categories:
 ## 一、官方 API
 
 ```js
-const modeling = this.modeler.get("modeling");
+const modeling = this.modeler.get('modeling')
 modeling.setColor(element, {
-  fill: "blue",
-  stroke: "red",
-});
+  fill: 'blue',
+  stroke: 'red',
+})
 ```
 
 ## 二、通过 css 自定义连线和箭头的颜色
@@ -56,35 +56,35 @@ import {
   append as svgAppend,
   attr as svgAttr,
   create as svgCreate,
-} from "tiny-svg";
+} from 'tiny-svg'
 
 bpmnModeler.importXML(xml).then(() => {
-  const marker = svgCreate("marker");
+  const marker = svgCreate('marker')
 
   svgAttr(marker, {
-    id: "#sequenceflow-arrow-normal",
-    viewBox: "0 0 20 20",
-    refX: "11",
-    refY: "10",
-    markerWidth: "10",
-    markerHeight: "10",
-    orient: "auto",
-  });
+    id: '#sequenceflow-arrow-normal',
+    viewBox: '0 0 20 20',
+    refX: '11',
+    refY: '10',
+    markerWidth: '10',
+    markerHeight: '10',
+    orient: 'auto',
+  })
 
-  const path = svgCreate("path");
+  const path = svgCreate('path')
 
   svgAttr(path, {
-    d: "M 1 5 L 11 10 L 1 15 Z",
+    d: 'M 1 5 L 11 10 L 1 15 Z',
     style:
-      " stroke-width: 1px; stroke-linecap: round; stroke-dasharray: 10000, 1; ",
-  });
+      ' stroke-width: 1px; stroke-linecap: round; stroke-dasharray: 10000, 1; ',
+  })
 
-  const defs = domQuery("defs");
-  svgAppend(marker, path);
-  svgAppend(defs, marker);
-});
+  const defs = domQuery('defs')
+  svgAppend(marker, path)
+  svgAppend(defs, marker)
+})
 ```
 
 ## 最后
 
-[在线预览](http://bpmn-doc.pengliang.online/)
+[在线预览](http://bpmn-doc.pl-fe.cn/)

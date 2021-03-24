@@ -1,5 +1,5 @@
-title_primary: "银之匙" # the bigger text
-title_secondary: "祝你健康平安幸福快乐" # the smaller text
+title_primary: '银之匙' # the bigger text
+title_secondary: '祝你健康平安幸福快乐' # the smaller text
 keywords:
 
 twitter: Samlldevel
@@ -15,10 +15,10 @@ disqus: # [short_name] on disqus.com
 dove: # For fun ONLY. Set to true to 'disable' comments on your site.
 valine: true
 
-valine_appid: "C5UQwaddmDNfGT2GyHq1RKN4-gzGzoHsz"
-valine_appkey: "nwu3U2sv3JcUcitnVTaO22GS"
-valine_serverURLs: "https://leancloud.pengliang.online"
-avatar: "robohash"
+valine_appid: 'C5UQwaddmDNfGT2GyHq1RKN4-gzGzoHsz'
+valine_appkey: 'nwu3U2sv3JcUcitnVTaO22GS'
+valine_serverURLs: 'https://leancloud.pl-fe.cn'
+avatar: 'robohash'
 # Set true to show the page indicator.
 showPageCount: true
 

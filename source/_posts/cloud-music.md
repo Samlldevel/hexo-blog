@@ -1,5 +1,5 @@
 ---
-title: "部署网易云音乐API - Nginx反向代理nodejs"
+title: '部署网易云音乐API - Nginx反向代理nodejs'
 date: 2021-01-26 23:12:20
 desc:
 tags:
@@ -23,20 +23,20 @@ categories:
 
 #### 准备
 
-首先得有个服务器，然后搭上 `Nginx`，为了方便点，~~我绑定了域名 [http://cloud-music.pengliang.online/](http://cloud-music.pengliang.online/)~~
+首先得有个服务器，然后搭上 `Nginx`，为了方便点，~~我绑定了域名 [http://cloud-music.pl-fe.cn/](http://cloud-music.pl-fe.cn/)~~
 
 将 `网易云API` 的 node 应用部署在 `Nginx` 中
 
 API : [https://neteasecloudmusicapi.vercel.app/#/](https://neteasecloudmusicapi.vercel.app/#/)
 Github : [https://github.com/Binaryify/NeteaseCloudMusicApi](https://github.com/Binaryify/NeteaseCloudMusicApi)
 
-> 好吧~ 😥 `https` 域名下不能混合 `http`请求， 改为 [https://pengliang.online/cloud-music-api/](https://pengliang.online/cloud-music-api/)
+> 好吧~ 😥 `https` 域名下不能混合 `http`请求， 改为 [https://pl-fe.cn/cloud-music-api/](https://pl-fe.cn/cloud-music-api/)
 
 在 `nginx` 配置请求转发就可以解决问题
 
 ```
  location /cloud-music-api/ {
-        proxy_pass http://cloud-music.pengliang.online/;
+        proxy_pass http://cloud-music.pl-fe.cn/;
     }
 ```
 
@@ -66,7 +66,7 @@ npm install pm2 -g
 ```
 server{
     listen 80;
-    server_name cloud-music.pengliang.online;
+    server_name cloud-music.pl-fe.cn;
     location / {
         proxy_pass http://127.0.0.1:3000;
     }
@@ -91,7 +91,7 @@ pm2 start
 #### 完成
 
 这下可以访问了，效果如下。
-访问 [http://cloud-music.pengliang.online/](http://cloud-music.pengliang.online/)
+访问 [http://cloud-music.pl-fe.cn/](http://cloud-music.pl-fe.cn/)
 ![网易云API首页](./cloud-music/网易云API.png)
 
 试试`搜索`
